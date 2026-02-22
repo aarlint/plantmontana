@@ -1,0 +1,16 @@
+{
+  "name": "plantmontana",
+  "version": "1.0.0",
+  "description": "Plant Montana - Western MT gardening guide for USDA Zone 4b-6a",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.4.3",
+    "multer": "^1.4.5-lts.1",
+    "serve-static": "^1.15.0"
+  }
+}
