@@ -1,13 +1,11 @@
 services:
   plantmontana:
     build: .
+    container_name: plantmontana
     restart: unless-stopped
     volumes:
       - plantmontana-data:/app/data
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.plantmontana.rule=Host(`plantmontana.localhost`)"
-      - "traefik.http.routers.plantmontana.entrypoints=web"
       - "traefik.http.services.plantmontana.loadbalancer.server.port=3000"
     networks:
       - traefik-proxy
