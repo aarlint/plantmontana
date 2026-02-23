@@ -1,0 +1,13 @@
+{
+  "name": "Plant Montana",
+  "short_name": "Plant MT",
+  "description": "Western Montana Gardening Guide",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#3a5f44",
+  "theme_color": "#3a5f44",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

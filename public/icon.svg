@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#3a5f44"/>
+  <rect x="8" y="8" width="496" height="496" rx="88" fill="none" stroke="#6ba368" stroke-width="2" opacity="0.3"/>
+  <!-- Leaf/sprout -->
+  <path d="M256 380 C256 380 256 260 256 220 C256 160 300 120 360 100 C340 160 310 200 280 230 C310 210 350 180 390 170 C360 220 320 260 280 280 C280 280 270 290 256 320" fill="none" stroke="#8fbc8b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M256 380 C256 380 256 280 256 240 C256 180 212 140 152 120 C172 180 202 220 232 250 C202 230 162 200 122 190 C152 240 192 280 232 300 C232 300 242 310 256 340" fill="none" stroke="#6ba368" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Stem -->
+  <line x1="256" y1="320" x2="256" y2="400" stroke="#c4956a" stroke-width="6" stroke-linecap="round"/>
+  <!-- Ground -->
+  <ellipse cx="256" cy="405" rx="60" ry="8" fill="#c4956a" opacity="0.3"/>
+  <!-- Text -->
+  <text x="256" y="470" text-anchor="middle" fill="white" font-family="sans-serif" font-size="34" font-weight="700" letter-spacing="2">PLANT MT</text>
+</svg>
