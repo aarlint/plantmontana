@@ -49,7 +49,8 @@ input,select,button{font-family:'DM Sans',sans-serif;font-size:1rem}
 /* ===== TOP BAR ===== */
 .top-bar{position:sticky;top:0;z-index:50;background:rgba(250,248,245,0.85);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  padding:12px 20px;display:flex;align-items:center;gap:10px}
+  padding:12px 20px;display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid rgba(229,223,215,0.6)}
 .top-bar .logo{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--green);
   display:flex;align-items:center;gap:8px}
 .top-bar .logo svg{width:22px;height:22px;color:var(--green-mid)}
@@ -216,21 +217,29 @@ main{padding:0 16px 16px;max-width:600px;margin:0 auto}
 .date-row{font-size:0.82rem;color:var(--text-dim);display:flex;align-items:center;gap:6px;margin-top:4px}
 .date-row svg{width:14px;height:14px}
 
+/* Desktop nav - hidden on mobile */
+.top-nav-desktop{display:none;gap:4px}
+.top-nav-desktop button{background:none;border:none;padding:10px 18px;border-radius:10px;
+  cursor:pointer;font-size:0.92rem;color:var(--text-dim);font-weight:500;
+  display:flex;align-items:center;gap:8px;transition:all 0.2s;white-space:nowrap}
+.top-nav-desktop button svg{width:18px;height:18px}
+.top-nav-desktop button:hover{background:var(--cream-dark);color:var(--text-secondary)}
+.top-nav-desktop button.active{background:var(--green);color:white}
+.top-nav-desktop button.active:hover{background:var(--green-dark)}
+
 /* Desktop tweaks */
 @media(min-width:768px){
-  main{padding:0 24px 24px}
+  main{padding:0 24px 24px;max-width:900px}
   .bottom-nav{display:none}
   .top-nav-desktop{display:flex}
   body{padding-bottom:0}
+  .top-bar{padding:14px 24px;max-width:900px;margin:0 auto}
   .modal{border-radius:var(--radius);max-height:90vh;margin:2rem auto}
   .modal-overlay{align-items:center}
+  .plant-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .frost-strip{grid-template-columns:repeat(4,1fr)}
+  .detail-grid{grid-template-columns:1fr 1fr 1fr}
 }
-.top-nav-desktop{display:none;gap:4px}
-.top-nav-desktop button{background:none;border:none;padding:8px 14px;border-radius:8px;
-  cursor:pointer;font-size:0.9rem;color:var(--text-dim);font-weight:500;
-  display:flex;align-items:center;gap:6px;transition:all 0.2s}
-.top-nav-desktop button svg{width:18px;height:18px}
-.top-nav-desktop button.active{background:var(--cream-dark);color:var(--green)}
 </style>
 </head>
 <body>
@@ -240,10 +249,10 @@ main{padding:0 16px 16px;max-width:600px;margin:0 auto}
   <div class="logo"><i data-lucide="leaf"></i> Plant Montana</div>
   <div style="flex:1"></div>
   <div class="top-nav-desktop">
-    <button class="active" onclick="showPage('dashboard',this)"><i data-lucide="sprout"></i> Dashboard</button>
-    <button onclick="showPage('calendar',this)"><i data-lucide="calendar"></i> Calendar</button>
-    <button onclick="showPage('plants',this)"><i data-lucide="grid-3x3"></i> Plants</button>
-    <button onclick="showPage('planner',this)"><i data-lucide="layout-grid"></i> Planner</button>
+    <button class="active" id="desk-dashboard" onclick="showPage('dashboard')"><i data-lucide="sprout"></i> Dashboard</button>
+    <button id="desk-calendar" onclick="showPage('calendar')"><i data-lucide="calendar"></i> Calendar</button>
+    <button id="desk-plants" onclick="showPage('plants')"><i data-lucide="flower-2"></i> Plants</button>
+    <button id="desk-planner" onclick="showPage('planner')"><i data-lucide="grid-3x3"></i> Planner</button>
   </div>
 </div>
 
@@ -327,16 +336,16 @@ main{padding:0 16px 16px;max-width:600px;margin:0 auto}
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="nav-item active" onclick="showPage('dashboard',this)" id="nav-dashboard">
+  <button class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">
     <i data-lucide="sprout"></i><span>Home</span>
   </button>
-  <button class="nav-item" onclick="showPage('calendar',this)" id="nav-calendar">
+  <button class="nav-item" onclick="showPage('calendar')" id="nav-calendar">
     <i data-lucide="calendar"></i><span>Calendar</span>
   </button>
-  <button class="nav-item" onclick="showPage('plants',this)" id="nav-plants">
+  <button class="nav-item" onclick="showPage('plants')" id="nav-plants">
     <i data-lucide="flower-2"></i><span>Plants</span>
   </button>
-  <button class="nav-item" onclick="showPage('planner',this)" id="nav-planner">
+  <button class="nav-item" onclick="showPage('planner')" id="nav-planner">
     <i data-lucide="grid-3x3"></i><span>Planner</span>
   </button>
 </nav>
@@ -363,16 +372,17 @@ async function init(){
   lucide.createIcons();
 }
 
-function showPage(id,btn){
+function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  // Bottom nav
+  // Sync bottom nav
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   const navBtn=document.getElementById('nav-'+id);
   if(navBtn)navBtn.classList.add('active');
-  // Desktop nav
+  // Sync desktop nav
   document.querySelectorAll('.top-nav-desktop button').forEach(b=>b.classList.remove('active'));
-  if(btn&&btn.closest('.top-nav-desktop'))btn.classList.add('active');
+  const deskBtn=document.getElementById('desk-'+id);
+  if(deskBtn)deskBtn.classList.add('active');
   if(id==='calendar'&&!calendarData)loadCalendar();
   window.scrollTo(0,0);
 }
